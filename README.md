@@ -9,7 +9,7 @@
 
 A sophisticated AI terminal interface supporting multiple AI models with real-time chat, system monitoring, and Discord bot integration.
 ## 🌐 Live Site
-[https://ai.ankitgupta.com.np/](ai.ankitgupta.com.np)
+[ai.ankitgupta.com.np](https://ai.ankitgupta.com.np/)
 ## ✨ Features
 
 ### 🖥️ Web Interface
