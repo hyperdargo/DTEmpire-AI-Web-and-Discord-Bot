@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DTempire AI Terminal v2.0</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="image/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="image/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="image/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="image/apple-touch-icon.png">
+    <link rel="manifest" href="image/site.webmanifest">
+</head>
+<body>
+    <!-- Matrix Background -->
+    <div class="matrix-bg"></div>
+    
+    <div class="container">
+        <!-- Header -->
+        <header class="terminal-header">
+            <h1><i class="fas fa-terminal"></i> DTEMPIRE AI TERMINAL</h1>
+            <p class="subtitle">Advanced AI Interface System v2.0</p>
+            <div class="terminal-status">
+                <div class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span>SYSTEM ONLINE</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <!-- Chat Terminal -->
+            <div class="chat-terminal">
+                <div class="terminal-header-bar">
+                    <div class="terminal-tabs">
+                        <div class="tab active">AI Chat</div>
+                        <div class="channel-tab active" data-model="dtempire">DTempire AI</div>
+                        <div class="channel-tab" data-model="deepseek">DeepSeek</div>
+                        <div class="channel-tab" data-model="gpt5">GPT-5</div>
+                        <div class="channel-tab" data-model="grok">Grok</div>
+                        <div class="channel-tab" data-model="popcat">PopCat</div>
+                        <div class="channel-tab" data-model="claude">Claude</div>
+                        
+                    </div>
+                    
+                    <!-- AI Channel Selector -->
+                    
+                </div>
+                
+                <div class="terminal-body">
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message system">
+                            <div class="message-content">
+                                <span class="msg-label">SYSTEM:</span>
+                                <span class="msg-text">DTempire AI Terminal initialized. Select AI channel and start chatting.</span>
+                            </div>
+                            <div class="message-time" id="systemTime">--:--:--</div>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input-terminal">
+                        <div class="input-prompt">
+                            <span class="prompt-sign">></span>
+                            <textarea 
+                                id="promptInput" 
+                                placeholder="Type your message here... (Shift + Enter for new line, Enter to send)"
+                                rows="3"
+                            ></textarea>
+                        </div>
+                        
+                        <div class="terminal-controls-panel">
+                            <div class="control-group">
+                                <div class="control-item">
+                                    <label>
+                                        <i class="fas fa-microchip"></i> Max Tokens
+                                        <input type="number" id="maxTokens" value="1000" min="1" max="4000">
+                                    </label>
+                                </div>
+                                <div class="control-item">
+                                    <label>
+                                        <i class="fas fa-thermometer-half"></i> Temperature
+                                        <input type="number" id="temperature" value="0.7" min="0" max="2" step="0.1">
+                                    </label>
+                                </div>
+                                <div class="control-item">
+                                    <label>
+                                        <i class="fas fa-brain"></i> Model
+                                        <select id="modelSelect">
+                                            <option value="dtempire" selected>DTempire AI (Default)</option>
+                                            <option value="deepseek">DeepSeek</option>
+                                            <option value="gpt5">GPT-5</option>
+                                            <option value="grok">Grok</option>
+                                            <option value="popcat">PopCat</option>
+                                            <option value="claude">Claude</option>
+                                            <option value="llama">Llama</option>
+                                            <option value="gemma">Gemma</option>
+                                            <option value="qwen">Qwen</option>
+                                            <option value="nemotron">Nemotron</option>
+                                            <option value="axentra">Axentra</option>
+                                            <option value="img_flux">Image Flux</option>
+                                            <option value="img_turbo">Image Turbo</option>
+                                            <option value="img_gpt">Image GPT</option>
+                                            <option value="img_stable">Image Stable</option>
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <button id="sendButton" class="execute-btn">
+                                <i class="fas fa-paper-plane"></i> SEND MESSAGE
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- System Status Panel -->
+                <div class="system-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-satellite-dish"></i> SYSTEM STATUS</h3>
+                        <button id="refreshStatus" class="refresh-btn">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="system-grid">
+                        <div class="system-card">
+                            <div class="card-icon">
+                                <i class="fas fa-server"></i>
+                            </div>
+                            <div class="card-content">
+                                <h4>API Status</h4>
+                                <p id="apiStatus" class="status-online">
+                                    <i class="fas fa-spinner fa-spin"></i> Checking...
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="system-card">
+                            <div class="card-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <div class="card-content">
+                                <h4>Response Time</h4>
+                                <p id="responseTime" class="data-value">-- ms</p>
+                            </div>
+                        </div>
+                        
+                        <div class="system-card">
+                            <div class="card-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <div class="card-content">
+                                <h4>Active Channel</h4>
+                                <p id="activeChannel" class="data-value">DTempire AI</p>
+                            </div>
+                        </div>
+                        
+                        <div class="system-card">
+                            <div class="card-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="card-content">
+                                <h4>Uptime</h4>
+                                <p id="uptime" class="data-value">00:00:00</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- API Terminal -->
+                <div class="api-terminal">
+                    <div class="terminal-header-bar">
+                        <div class="tab active">API ENDPOINTS</div>
+                    </div>
+                    <div class="terminal-body">
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span>MAIN API ENDPOINT</span>
+                                <button class="copy-btn" onclick="copyCode(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <pre><code>${window.location.origin}/ai?prompt=hello&model=dtempire</code></pre>
+                        </div>
+                        
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span>DTEMPIRE AI API</span>
+                                <button class="copy-btn" onclick="copyCode(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <pre><code>http://158.69.214.8:9853/dtempire-ai?prompt=hello</code></pre>
+                        </div>
+                        
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span>IMAGE GENERATION API</span>
+                                <button class="copy-btn" onclick="copyCode(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <pre><code>https://imggen-api.ankitgupta.com.np/api/ai-text/?prompt=hi</code></pre>
+                        </div>
+                        
+                        <div class="quick-test">
+                            <h4><i class="fas fa-vial"></i> API TEST CONSOLE</h4>
+                            <div class="test-input">
+                                <input type="text" id="apiTestInput" placeholder="Enter test query...">
+                                <button id="testApiBtn" class="test-btn">
+                                    <i class="fas fa-rocket"></i> TEST
+                                </button>
+                            </div>
+                            <div id="apiResponse" class="api-response">
+                                <pre>API response will appear here...</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="terminal-footer">
+            <div class="footer-line">
+                <span class="footer-item">
+                    <i class="fas fa-shield-alt"></i> Secure Connection
+                </span>
+                <span class="footer-item">
+                    <i class="fas fa-user-secret"></i> Session Active
+                </span>
+                <span class="footer-item">
+                    <i class="fas fa-code"></i> v2.0.1
+                </span>
+                <span class="footer-item">
+                    <i class="fas fa-database"></i> Multi-AI System
+                </span>
+            </div>
+            <div class="command-history">
+                <i class="fas fa-history"></i> Last Command: <span id="lastCommandTime">--:--:--</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
